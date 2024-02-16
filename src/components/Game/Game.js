@@ -1,5 +1,6 @@
 import React from 'react';
 import GuessInput from '../GuessInput';
+import GuessResults from '../GuessResults';
 
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
@@ -10,10 +11,22 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
+  const [guesses, setGuesses] = React.useState([]);
+
+  function handleGuesses(tentativeGuess) {
+    const latestGuess = {
+      id: Math.floor(Math.random() * 900000) + 100000,
+      word: tentativeGuess
+    };
+
+    const updatedGuesses = [...guesses, latestGuess];
+    setGuesses(updatedGuesses);
+  }
+
   return (
     <>
-      <>Put a game here!</>
-      <GuessInput></GuessInput>
+      <GuessResults guesses={guesses}></GuessResults>
+      <GuessInput handleGuesses={handleGuesses}></GuessInput>
     </>
   );
 }
